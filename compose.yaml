@@ -1,0 +1,8 @@
+services:
+  client:
+    build: .
+    restart: on-failure
+    volumes:
+      - './:/app'
+    ports:
+      - '3001:3001'
