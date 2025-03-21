@@ -2,6 +2,6 @@
 
 <template>
   <main>
-    <p>Hello</p>
+    <h1 class="text-6xl">Hello</h1>
   </main>
 </template>
