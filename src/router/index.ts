@@ -1,7 +1,14 @@
 import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
 
-function validateAuthentication(to: RouteLocationNormalized) {
-  console.log('validateAuthentication called for: ' + to.path)
+function validateAuthentication() {
+  const accessToken = localStorage.getItem('accessToken')
+  if (accessToken == null) return { name: 'login' }
+  return true
+}
+
+function validateGuest() {
+  const accessToken = localStorage.getItem('accessToken')
+  if (accessToken) return { name: 'dashboard' }
   return true
 }
 
@@ -12,7 +19,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       beforeEnter: [validateAuthentication],
-      // meta: { requiresAuth: true },
+      redirect: 'dashboard',
       children: [
         {
           path: '/dashboard',
@@ -20,20 +27,27 @@ const router = createRouter({
           component: () => import('../views/dashboard/DashboardVue.vue'),
         },
       ],
-      redirect: 'dashboard',
     },
     {
       path: '/login',
       name: 'login',
+      beforeEnter: [validateGuest],
       meta: { requiresGuest: true },
       component: () => import('../views/auth/LoginView.vue'),
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      beforeEnter: [validateGuest],
+      meta: { requiresGuest: true },
+      component: () => import('../views/auth/SignupView.vue'),
     },
   ],
 })
 router.beforeEach(async (to, from) => {
-  console.log('--------------------------- Route ---------------------------')
-  console.log({ to })
-  console.log({ from })
+  // console.log('--------------------------- Route ---------------------------')
+  // console.log({ to })
+  // console.log({ from })
   return true
 })
 
