@@ -36,15 +36,15 @@ const router = createRouter({
       component: () => import('../views/auth/LoginView.vue'),
     },
     {
-      path: '/signup',
-      name: 'signup',
+      path: '/register',
+      name: 'register',
       beforeEnter: [validateGuest],
       meta: { requiresGuest: true },
-      component: () => import('../views/auth/SignupView.vue'),
+      component: () => import('../views/auth/RegisterView.vue'),
     },
   ],
 })
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (_to: RouteLocationNormalized, _from: RouteLocationNormalized) => {
   // console.log('--------------------------- Route ---------------------------')
   // console.log({ to })
   // console.log({ from })
