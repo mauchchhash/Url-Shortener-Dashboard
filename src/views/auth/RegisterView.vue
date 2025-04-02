@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import axios from 'axios'
+import apiClient from '@/setups/apiClient'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
@@ -20,11 +20,10 @@ const register = () => {
     password: z.string().min(8).max(30),
   })
   const result = schema.safeParse(formData)
-  console.log({ result: result?.error?.issues })
   if (!result.success) {
     return
   }
-  axios.post('api/register', formData).then((_r) => {
+  apiClient.post('api/register', formData).then((_r) => {
     router.push({ name: 'login' })
   })
 }

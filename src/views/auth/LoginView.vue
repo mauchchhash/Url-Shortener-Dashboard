@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import axios from 'axios'
+import apiClient from '@/setups/apiClient'
+import useAuthStore from '@/store/authStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
@@ -7,6 +8,7 @@ import { z } from 'zod'
 const router = useRouter()
 const email = ref()
 const password = ref()
+const authStore = useAuthStore()
 const login = () => {
   const formData = {
     email: email.value,
@@ -17,12 +19,11 @@ const login = () => {
     password: z.string().min(8).max(30),
   })
   const result = schema.safeParse(formData)
-  console.log({ result })
   if (!result.success) {
     return
   }
-  axios.post('api/login', formData).then((r) => {
-    localStorage.setItem('accessToken', r.data.accessToken)
+  apiClient.post('api/login', formData).then((r) => {
+    authStore.setAccessToken(r.data.accessToken)
     router.push({ name: 'dashboard' })
   })
 }
