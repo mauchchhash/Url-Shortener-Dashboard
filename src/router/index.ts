@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'root',
       meta: { requiresAuth: true },
       redirect: 'dashboard',
       children: [

@@ -34,15 +34,15 @@ const register = () => {
     <div class="m-auto border-2 rounded-lg">
       <div class="flex gap-2 justify-between bg-blue-100 p-5">
         <span class="text-black">Full Name</span>
-        <input v-model="fullname" class="text-black border-black border-1" type="text" />
+        <input v-model="fullname" class="text-black border-black border-1 pl-1" type="text" />
       </div>
       <div class="flex gap-2 justify-between bg-blue-100 p-5">
         <span class="text-black">Email</span>
-        <input v-model="email" class="text-black border-black border-1" type="text" />
+        <input v-model="email" class="text-black border-black border-1 pl-1" type="text" />
       </div>
       <div class="flex gap-2 justify-between bg-blue-100 p-5">
         <span class="text-black">Password</span>
-        <input v-model="password" class="text-black border-black border-1" type="password" />
+        <input v-model="password" class="text-black border-black border-1 pl-1" type="password" />
       </div>
       <div class="flex gap-2 justify-between bg-blue-100 p-5">
         <span class="text-black">

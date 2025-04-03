@@ -5,19 +5,12 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const authStore = useAuthStore()
+
 const logout = () => {
   apiClient.post('api/logout').then(() => {
     authStore.deleteAccessToken()
     router.push({ name: 'login' })
   })
-}
-const refreshToken = () => {
-  apiClient
-    .post('api/auth/getNewAccessToken')
-    .then((r) => {
-      authStore.setAccessToken(r.data.accessToken)
-    })
-    .catch(() => {})
 }
 </script>
 <template>
@@ -29,9 +22,13 @@ const refreshToken = () => {
       </button>
     </div>
     <div>
-      <button @click.prevent="refreshToken" class="m-1 border-white border-1 px-2 text-white">
+      <button
+        @click.prevent="authStore.refreshToken"
+        class="m-1 border-white border-1 px-2 text-white"
+      >
         Refresh token
       </button>
+      <p class="text-white">{{ authStore.authUser.fullname }}</p>
     </div>
   </div>
 </template>
