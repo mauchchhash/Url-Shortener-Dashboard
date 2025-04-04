@@ -48,11 +48,17 @@ const useAuthStore = defineStore('auth', () => {
       })
   }
 
+  const logout = async () => {
+    return apiClient.post('api/logout').then(() => {
+      deleteAccessToken()
+      router.push({ name: 'login' })
+    })
+  }
+
   const fetchAuthUser = async () => {
     return apiClient
       .get('api/users/me')
       .then((r) => {
-        console.log(r.data.data)
         setAuthUser(r.data.data)
         return authUser
       })
@@ -70,6 +76,7 @@ const useAuthStore = defineStore('auth', () => {
     setAccessToken,
     deleteAccessToken,
     refreshToken,
+    logout,
     authUser,
     setAuthUser,
     fetchAuthUser,

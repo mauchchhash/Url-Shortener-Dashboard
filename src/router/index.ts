@@ -13,6 +13,7 @@ const router = createRouter({
         {
           path: '/dashboard',
           name: 'dashboard',
+          meta: { pageTitle: 'Dashboard' },
           component: () => import('../views/dashboard/DashboardVue.vue'),
         },
       ],
@@ -20,13 +21,13 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      meta: { requiresGuest: true },
+      meta: { requiresGuest: true, pageTitle: 'Login' },
       component: () => import('../views/auth/LoginView.vue'),
     },
     {
       path: '/register',
       name: 'register',
-      meta: { requiresGuest: true },
+      meta: { requiresGuest: true, pageTitle: 'Register' },
       component: () => import('../views/auth/RegisterView.vue'),
     },
   ],
@@ -36,18 +37,17 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
   // console.log({ to })
   // console.log({ from })
 
+  document.title = (to.meta?.pageTitle as string) ?? 'Url Shortener'
+
+  const authStore = useAuthStore()
   if (to.meta.requiresAuth) {
-    const authStore = useAuthStore()
     if (authStore.accessToken == null && (await authStore.refreshToken()) == false) {
       return { name: 'login' }
     }
     return true
   } else if (to.meta.requiresGuest) {
     if (from.meta.requiresAuth) return true
-
-    const authStore = useAuthStore()
-    if (authStore.accessToken || (await authStore.refreshToken()) == true)
-      return { name: 'dashboard' }
+    if (authStore.accessToken || (await authStore.refreshToken()) == true) return { name: 'dashboard' }
     return true
   }
   return true
