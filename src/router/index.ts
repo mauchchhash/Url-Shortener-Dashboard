@@ -8,13 +8,14 @@ const router = createRouter({
       path: '/',
       name: 'root',
       meta: { requiresAuth: true },
+      component: () => import('../components/layouts/DashboardLayout.vue'),
       redirect: 'dashboard',
       children: [
         {
           path: '/dashboard',
           name: 'dashboard',
           meta: { pageTitle: 'Dashboard' },
-          component: () => import('../views/dashboard/DashboardVue.vue'),
+          component: () => import('../views/dashboard/DashboardView.vue'),
         },
       ],
     },
