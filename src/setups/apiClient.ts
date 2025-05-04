@@ -31,11 +31,7 @@ export const apiClientSetup = () => {
       }
       if (originalConfig.url !== '/api/login' && err.response) {
         // Access Token was expired
-        if (
-          err.response.status === 403 &&
-          err.response.data.message == 'Token expired' &&
-          !originalConfig._retry
-        ) {
+        if (err.response.status === 401 && err.response.data.errorCode == 'InvalidAccessToken' && !originalConfig._retry) {
           originalConfig._retry = true
 
           try {

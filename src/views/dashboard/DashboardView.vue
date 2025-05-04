@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import useAuthStore from '@/store/authStore'
+import { ref } from 'vue'
+import CreateShortUrlModal from '@/components/shortUrl/CreateShortUrlModal.vue'
 
-const authStore = useAuthStore()
+const newShortUrlModalOpen = ref(false)
 </script>
+
 <template>
-  <div>{{ authStore.authUser.email }}</div>
+  <div>
+    <button @click.prevent="() => (newShortUrlModalOpen = !newShortUrlModalOpen)" class="m-1 border-white border-1 px-2 text-whiteack">
+      New Short Url
+    </button>
+  </div>
+  <CreateShortUrlModal v-if="newShortUrlModalOpen"></CreateShortUrlModal>
 </template>
