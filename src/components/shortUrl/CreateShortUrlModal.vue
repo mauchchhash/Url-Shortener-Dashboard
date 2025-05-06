@@ -12,7 +12,6 @@ const getShortUrl = () => {
       url: longUrl.value,
     })
     .then((r) => {
-      console.log({ shortUrl: r.data.shortUrl })
       generatedShortUrlData.value = r.data.shortUrl
     })
 }
